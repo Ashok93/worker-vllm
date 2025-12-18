@@ -24,7 +24,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 RUN python3 -m pip install paddlepaddle-gpu==3.2.0 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/ && \
     python3 -m pip install -U "paddleocr[doc-parser]" && \
     python3 -m pip install https://paddle-whl.bj.bcebos.com/nightly/cu126/safetensors/safetensors-0.6.2.dev0-cp38-abi3-linux_x86_64.whl && \
-    python3 -m pip install -U vllm --pre --extra-index-url https://wheels.vllm.ai/nightly --extra-index-url https://download.pytorch.org/whl/cu126 --index-strategy unsafe-best-match
+    python3 -m pip install -U vllm --pre --extra-index-url https://wheels.vllm.ai/nightly --extra-index-url https://download.pytorch.org/whl/cu126
 
 # Setup for Option 2: Building the Image with the Model included
 ARG MODEL_NAME="PaddlePaddle/PaddleOCR-VL"
