@@ -5,7 +5,7 @@ import requests
 import numpy as np
 import tempfile
 import runpod
-from paddleocr import PPStructure
+from paddleocr import PPStructureV3
 from utils import JobInput
 from engine import vLLMEngine, OpenAIvLLMEngine
 
@@ -14,7 +14,8 @@ vllm_engine = vLLMEngine()
 openai_engine = OpenAIvLLMEngine(vllm_engine)
 
 # Initialize Layout Engine (DocLayoutV2)
-layout_engine = PPStructure(layout=True, table=False, ocr=False, show_log=False)
+# Using PPStructureV3 as PPStructure is deprecated in v3.0
+layout_engine = PPStructureV3(show_log=False)
 
 def get_file_path(input_data):
     """

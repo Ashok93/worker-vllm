@@ -7,12 +7,14 @@ ssl._create_default_https_context = ssl._create_unverified_context
 def warmup():
     print("Pre-downloading PaddleOCR models...")
     
-    # Import PPStructure. This triggers the download of default models if not present.
-    # We match the arguments from handler.py: layout=True, table=False, ocr=False
-    from paddleocr import PPStructure
+    # Import PPStructureV3. this triggers the download of default models if not present.
+    # Note: PPStructure(v2) is removed in paddleocr>=3.0.
+    from paddleocr import PPStructureV3
     
     # Initialize the engine. Use show_log=True for build logs.
-    engine = PPStructure(layout=True, table=False, ocr=False, show_log=True)
+    # PPStructureV3 handles layout/table/ocr internally based on the pipeline.
+    # We might need to specify lang='en' or similar if needed, but defaults work for warmup.
+    engine = PPStructureV3(show_log=True)
     
     # Run a dummy inference to ensure everything is loaded/unpacked
     # We can pass a dummy image path or just rely on init if it downloads everything.
