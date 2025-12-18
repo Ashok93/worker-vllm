@@ -1,5 +1,5 @@
 # Keep your existing base
-FROM nvidia/cuda:12.1.0-base-ubuntu22.04 
+FROM nvidia/cuda:12.6.0-base-ubuntu22.04 
 
 # --- ADDITION 1: System Dependencies ---
 # PaddleOCR and OpenCV require these libraries to handle images/math
@@ -11,7 +11,7 @@ RUN apt-get update -y && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-RUN ldconfig /usr/local/cuda-12.1/compat/
+RUN ldconfig /usr/local/cuda-12.6/compat/
 
 # Install Python dependencies (from your updated requirements.txt)
 COPY builder/requirements.txt /requirements.txt
@@ -20,12 +20,11 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     python3 -m pip install --upgrade -r /requirements.txt
 
 # --- ADDITION 2: vLLM & Specific Paddle Wheel ---
-# Install PaddlePaddle and PaddleOCR as per specific vLLM recipe
-RUN python3 -m pip install paddlepaddle-gpu==3.2.0 -i https://www.paddlepaddle.org.cn/packages/stable/cu123/ && \
-    python3 -m pip install "paddleocr[doc-parser]>=2.8.1" && \
-    python3 -m pip install https://paddle-whl.bj.bcebos.com/nightly/cu123/safetensors/safetensors-0.6.2.dev0-cp38-abi3-linux_x86_64.whl && \
-    python3 -m pip install vllm==0.6.2 && \
-    python3 -m pip install flashinfer -i https://flashinfer.ai/whl/cu121/torch2.4
+# Install PaddlePaddle and PaddleOCR as per vLLM recipe (cu126)
+RUN python3 -m pip install paddlepaddle-gpu==3.2.0 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/ && \
+    python3 -m pip install -U "paddleocr[doc-parser]" && \
+    python3 -m pip install https://paddle-whl.bj.bcebos.com/nightly/cu126/safetensors/safetensors-0.6.2.dev0-cp38-abi3-linux_x86_64.whl && \
+    python3 -m pip install -U vllm --pre --extra-index-url https://wheels.vllm.ai/nightly --extra-index-url https://download.pytorch.org/whl/cu126 --index-strategy unsafe-best-match
 
 # Setup for Option 2: Building the Image with the Model included
 ARG MODEL_NAME="PaddlePaddle/PaddleOCR-VL"
