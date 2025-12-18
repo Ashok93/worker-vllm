@@ -14,7 +14,7 @@ def warmup():
     # Initialize the engine. Use show_log=True for build logs.
     # PPStructureV3 handles layout/table/ocr internally based on the pipeline.
     # We might need to specify lang='en' or similar if needed, but defaults work for warmup.
-    engine = PPStructureV3(show_log=True)
+    engine = PPStructureV3()
     
     # Run a dummy inference to ensure everything is loaded/unpacked
     # We can pass a dummy image path or just rely on init if it downloads everything.

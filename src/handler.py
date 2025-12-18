@@ -15,7 +15,7 @@ openai_engine = OpenAIvLLMEngine(vllm_engine)
 
 # Initialize Layout Engine (DocLayoutV2)
 # Using PPStructureV3 as PPStructure is deprecated in v3.0
-layout_engine = PPStructureV3(show_log=False)
+layout_engine = PPStructureV3()
 
 def get_file_path(input_data):
     """
