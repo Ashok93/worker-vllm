@@ -49,13 +49,9 @@ COPY src /src
 
 # --- ADDITION 3: Pre-download Layout Models ---
 # This "bakes" the PP-DocLayoutV2 models into the image
-RUN python3 -c "from paddleocr import PPStructure; PPStructure(layout=True, show_log=False)"
+RUN python3 /src/warmup_paddle.py
 
-RUN --mount=type=secret,id=HF_TOKEN,required=false \
-    if [ -f /run/secrets/HF_TOKEN ]; then \
-    export HF_TOKEN=$(cat /run/secrets/HF_TOKEN); \
-    fi && \
-    if [ -n "$MODEL_NAME" ]; then \
+RUN if [ -n "$MODEL_NAME" ]; then \
     python3 /src/download_model.py; \
     fi
 
