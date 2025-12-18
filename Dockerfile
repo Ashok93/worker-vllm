@@ -20,8 +20,11 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     python3 -m pip install --upgrade -r /requirements.txt
 
 # --- ADDITION 2: vLLM & Specific Paddle Wheel ---
-# Note: Using vLLM 0.6.2+ is recommended for the latest VLM support
-RUN python3 -m pip install vllm==0.6.2 && \
+# Install PaddlePaddle and PaddleOCR as per specific vLLM recipe
+RUN python3 -m pip install paddlepaddle-gpu==3.2.0 -i https://www.paddlepaddle.org.cn/packages/stable/cu123/ && \
+    python3 -m pip install "paddleocr[doc-parser]>=2.8.1" && \
+    python3 -m pip install https://paddle-whl.bj.bcebos.com/nightly/cu123/safetensors/safetensors-0.6.2.dev0-cp38-abi3-linux_x86_64.whl && \
+    python3 -m pip install vllm==0.6.2 && \
     python3 -m pip install flashinfer -i https://flashinfer.ai/whl/cu121/torch2.4
 
 # Setup for Option 2: Building the Image with the Model included

@@ -12,10 +12,8 @@ transformers>=4.57.0
 bitsandbytes>=0.45.0
 kernels
 torch==2.6.0
-# --- PaddleOCR-VL Additions ---
---extra-index-url https://www.paddlepaddle.org.cn/packages/stable/cu121/
-paddlepaddle-gpu
-paddleocr>=3.0.0b2
+# PaddleOCR dependencies handled in Dockerfile
+
 opencv-python-headless
 pyclipper
 shapely
